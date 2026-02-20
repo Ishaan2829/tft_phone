@@ -4,9 +4,7 @@
 
 lv_obj_t *scr_settings;
 
-// ── Status label (updated by Bluetooth later) ─────────────────────────────
-lv_obj_t *lbl_bt_status;
-lv_obj_t *lbl_bt_device;
+
 
 void create_settings_screen() {
     scr_settings = lv_obj_create(NULL);

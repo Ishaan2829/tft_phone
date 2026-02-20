@@ -4,9 +4,7 @@
 
 lv_obj_t *scr_music;
 
-// ── Track info labels (updated by Bluetooth AVRCP later) ──────────────────
-lv_obj_t *lbl_track;
-lv_obj_t *lbl_artist;
+
 
 void create_music_screen() {
     scr_music = lv_obj_create(NULL);

@@ -7,6 +7,7 @@
 #include "ui_clock.h"
 #include "ui_calendar.h"
 #include "ui_calculator.h"
+#include "events.h"
 
 #include "ui_manager.h"
 #include "ui_home.h"
@@ -15,7 +16,6 @@
 #include "ui_settings.h"
 #include "ui_splash.h"
 
-// ── Hardware ───────────────────────────────────────────────────────────────
 #define T_CS  5
 #define T_IRQ 27
 
@@ -26,7 +26,6 @@ XPT2046_Touchscreen touch(T_CS, T_IRQ);
 static lv_disp_draw_buf_t draw_buf;
 static lv_color_t buf[320 * 10];
 
-// ── Display flush ──────────────────────────────────────────────────────────
 void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
     // If this is a full screen flush, draw wallpaper first
     
@@ -41,7 +40,6 @@ void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color
     lv_disp_flush_ready(disp);
 }
 
-// ── Touch read ─────────────────────────────────────────────────────────────
 void my_touch_read(lv_indev_drv_t *indev, lv_indev_data_t *data) {
     if (touch.tirqTouched() && touch.touched()) {
         TS_Point p = touch.getPoint();
@@ -80,6 +78,22 @@ void setup() {
 
     bt_init();
 
+    events_on(EVT_BT_TRACK_CHANGED, [](Event e) {
+    lv_label_set_text(lbl_track,  e.str1.c_str());
+    lv_label_set_text(lbl_artist, e.str2.c_str());
+});
+
+events_on(EVT_BT_CONNECTED, [](Event e) {
+    lv_label_set_text(lbl_bt_status, "Status: Connected");
+    lv_obj_set_style_text_color(lbl_bt_icon, lv_color_hex(0x1A78C2), 0);
+});
+
+events_on(EVT_BT_DISCONNECTED, [](Event e) {
+    lv_label_set_text(lbl_bt_status, "Status: Disconnected");
+    lv_label_set_text(lbl_bt_device, "Device: None");
+    lv_obj_set_style_text_color(lbl_bt_icon, lv_color_hex(0x555555), 0);
+});
+
     //  screens
     create_home_screen();
     create_call_screen();
@@ -94,13 +108,8 @@ void setup() {
 }
 
 void loop() {
-    Serial.println(ESP.getFreeHeap());
     uint32_t secs = millis() / 1000;
     update_statusbar(secs, bt_connected);
-
-    lv_label_set_text(lbl_track,  bt_track.c_str());
-    lv_label_set_text(lbl_artist, bt_artist.c_str());
-
     lv_timer_handler();
     delay(5);
 }

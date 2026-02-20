@@ -1,9 +1,6 @@
 #pragma once
 #include <lvgl.h>
-
-lv_obj_t *statusbar;
-lv_obj_t *lbl_time;
-lv_obj_t *lbl_bt_icon;
+#include "ui_manager.h"
 
 // ── Call this once, then call update_statusbar() in loop ──────────────────
 void create_statusbar(lv_obj_t *parent) {

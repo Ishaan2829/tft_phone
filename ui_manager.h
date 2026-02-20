@@ -9,6 +9,16 @@ extern lv_obj_t *scr_calculator;
 extern lv_obj_t *scr_calendar;
 extern lv_obj_t *scr_clock;
 
+
+// ── Shared UI labels updated by events ────────────────────────────────────
+lv_obj_t *statusbar;
+lv_obj_t *lbl_time;
+lv_obj_t *lbl_bt_icon;
+lv_obj_t *lbl_track;
+lv_obj_t *lbl_artist;
+lv_obj_t *lbl_bt_status;
+lv_obj_t *lbl_bt_device;
+
 // ── Forward declarations of create functions ───────────────────────────────
 void create_calculator_screen();
 void create_calendar_screen();
