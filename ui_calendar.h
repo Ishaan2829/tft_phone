@@ -5,30 +5,30 @@
 
 lv_obj_t *scr_calendar;
 
-// ── Month names ────────────────────────────────────────────────────────────
+// MONTHS
 static const char *month_names[] = {
     "January", "February", "March", "April",
     "May", "June", "July", "August",
     "September", "October", "November", "December"
 };
 
-// ── Days in each month (non-leap year) ────────────────────────────────────
+// DAYS 
 static const uint8_t days_in_month[] = {
     31,28,31,30,31,30,31,31,30,31,30,31
 };
 
-static int8_t  cal_month = 0;   // 0 = January
+static int8_t  cal_month = 0;   
 static int8_t  cal_day   = 1;
 static lv_obj_t *lbl_month_year;
-static lv_obj_t *day_labels[42]; // 6 rows x 7 cols max
+static lv_obj_t *day_labels[42]; 
 
-// ── Redraw day grid ────────────────────────────────────────────────────────
+// ── GRID REDRAW
 void cal_redraw() {
     char buf[20];
     snprintf(buf, sizeof(buf), "%s", month_names[cal_month]);
     lv_label_set_text(lbl_month_year, buf);
 
-    // First day offset (simplified — starts on Monday=0)
+    // FIRST DAY MONDAY **********WIP FOR DYNAMIC
     uint8_t total_days = days_in_month[cal_month];
     uint8_t day = 1;
 
@@ -52,17 +52,13 @@ void create_calendar_screen() {
     lv_obj_set_style_bg_color(scr_calendar, lv_color_hex(0x0d0d0d), 0);
     lv_obj_clear_flag(scr_calendar, LV_OBJ_FLAG_SCROLLABLE);
 
-    // ── Status bar ─────────────────────────────────────────────────────────
-    create_statusbar(scr_calendar);
 
-    // ── Month title ────────────────────────────────────────────────────────
     lbl_month_year = lv_label_create(scr_calendar);
     lv_label_set_text(lbl_month_year, "January");
     lv_obj_set_style_text_color(lbl_month_year, lv_color_hex(0xFFFFFF), 0);
     lv_obj_set_style_text_font(lbl_month_year, &lv_font_montserrat_20, 0);
     lv_obj_align(lbl_month_year, LV_ALIGN_TOP_MID, 0, 25);
 
-    // ── Prev/Next month buttons ────────────────────────────────────────────
     lv_obj_t *btn_prev = lv_btn_create(scr_calendar);
     lv_obj_set_size(btn_prev, 40, 30);
     lv_obj_align(btn_prev, LV_ALIGN_TOP_LEFT, 10, 22);
@@ -87,7 +83,7 @@ void create_calendar_screen() {
     lv_label_set_text(ln, LV_SYMBOL_RIGHT);
     lv_obj_center(ln);
 
-    // ── Day headers ────────────────────────────────────────────────────────
+    // HEADER
     const char *days[] = {"M","T","W","T","F","S","S"};
     for (uint8_t i = 0; i < 7; i++) {
         lv_obj_t *lbl = lv_label_create(scr_calendar);
@@ -108,7 +104,6 @@ void create_calendar_screen() {
 
     cal_redraw();
 
-    // ── Back button ────────────────────────────────────────────────────────
     lv_obj_t *btn_back = lv_btn_create(scr_calendar);
     lv_obj_set_size(btn_back, 80, 30);
     lv_obj_align(btn_back, LV_ALIGN_BOTTOM_MID, 0, -5);

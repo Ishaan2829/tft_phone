@@ -11,21 +11,21 @@ void create_splash_screen() {
     lv_obj_set_style_bg_grad_dir(scr_splash, LV_GRAD_DIR_VER, 0);
     lv_obj_clear_flag(scr_splash, LV_OBJ_FLAG_SCROLLABLE);
 
-    // ── Main title ─────────────────────────────────────────────────────────
+    //BIG TITLE********
     lv_obj_t *title = lv_label_create(scr_splash);
     lv_label_set_text(title, "BT Phone");
     lv_obj_set_style_text_color(title, lv_color_hex(0xFFFFFF), 0);
     lv_obj_set_style_text_font(title, &lv_font_montserrat_48, 0);
     lv_obj_align(title, LV_ALIGN_CENTER, 0, -20);
 
-    // ── Subtitle ───────────────────────────────────────────────────────────
+    // TITLE
     lv_obj_t *sub = lv_label_create(scr_splash);
     lv_label_set_text(sub, "Bluetooth Companion Device");
     lv_obj_set_style_text_color(sub, lv_color_hex(0x8B5CF6), 0);
     lv_obj_set_style_text_font(sub, &lv_font_montserrat_14, 0);
     lv_obj_align(sub, LV_ALIGN_CENTER, 0, 30);
 
-    // ── Loading bar ────────────────────────────────────────────────────────
+    // LOADING BAR
     lv_obj_t *bar = lv_bar_create(scr_splash);
     lv_obj_set_size(bar, 200, 4);
     lv_obj_align(bar, LV_ALIGN_CENTER, 0, 70);
@@ -36,7 +36,7 @@ void create_splash_screen() {
     lv_bar_set_range(bar, 0, 100);
     lv_bar_set_value(bar, 0, LV_ANIM_OFF);
 
-    // ── Animate bar then switch to home ───────────────────────────────────
+    //LOADING ANIMATION*********
     lv_anim_t a;
     lv_anim_init(&a);
     lv_anim_set_exec_cb(&a, [](void *obj, int32_t val) {

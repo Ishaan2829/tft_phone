@@ -10,7 +10,7 @@ extern lv_obj_t *lbl_bt_device;
 BluetoothA2DPSink a2dp_sink;
 bool bt_connected = false;
 
-// ── AVRCP metadata callback ────────────────────────────────────────────────
+// AVRCP METADATA*********DONT CHANGE**********
 void avrc_metadata_callback(uint8_t id, const uint8_t *text) {
     static String title, artist;
     switch (id) {
@@ -24,7 +24,7 @@ void avrc_metadata_callback(uint8_t id, const uint8_t *text) {
     }
 }
 
-// ── Connection state callback ──────────────────────────────────────────────
+// CONN CALLBACL**********
 void connection_state_callback(esp_a2d_connection_state_t state, void *ptr) {
     if (state == ESP_A2D_CONNECTION_STATE_CONNECTED) {
         bt_connected = true;
@@ -37,7 +37,6 @@ void connection_state_callback(esp_a2d_connection_state_t state, void *ptr) {
     }
 }
 
-// ── Init Bluetooth ─────────────────────────────────────────────────────────
 void bt_init() {
     a2dp_sink.set_avrc_metadata_callback(avrc_metadata_callback);
     a2dp_sink.set_on_connection_state_changed(connection_state_callback);
@@ -45,7 +44,7 @@ void bt_init() {
     Serial.println("Bluetooth started — search for BT-Phone");
 }
 
-// ── Music controls ─────────────────────────────────────────────────────────
+//MUSIC CONTROL*************
 void bt_play_pause() { a2dp_sink.pause();    }
 void bt_next_track() { a2dp_sink.next();     }
 void bt_prev_track() { a2dp_sink.previous(); }

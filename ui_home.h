@@ -24,7 +24,6 @@ void create_home_screen() {
     lv_obj_set_style_bg_grad_dir(scr_home, LV_GRAD_DIR_VER, 0);
     lv_obj_set_style_bg_opa(scr_home, LV_OPA_COVER, 0);
 
-    create_statusbar(scr_home);
 
    
 
@@ -38,7 +37,7 @@ void create_home_screen() {
         { LV_SYMBOL_BELL,     &scr_clock,      lv_color_hex(0x06B6D4) },
     };
 
-    // ── Icon grid (2 x 3, centered)*************
+    // ── ICON GRID (2 x 3, centered)*************
     uint8_t cols    = 3;
     uint8_t icon_sz = 72;
     uint8_t gap     = 18;
@@ -76,7 +75,7 @@ void create_home_screen() {
         lv_obj_set_style_text_font(icon, &lv_font_montserrat_20, 0);
         lv_obj_center(icon);
 
-        // ── Touch handler ──────────────────────────────────────────────────
+        // TOUCH HANDLER*************
         lv_obj_set_user_data(btn, apps[i].target);
         lv_obj_add_event_cb(btn, [](lv_event_t *e) {
             lv_obj_t **t = (lv_obj_t **)lv_obj_get_user_data(lv_event_get_target(e));
