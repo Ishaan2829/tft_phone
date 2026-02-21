@@ -30,10 +30,14 @@ clock_labels[0] = lbl_clock;
 clock_labels[1] = lbl_secs;
 
 //NTP
+
+
 lv_timer_create([](lv_timer_t *t) {
+
     lv_obj_t **labels = (lv_obj_t **)t->user_data;
     struct tm timeinfo;
     if (getLocalTime(&timeinfo)) {
+        
         char timebuf[6];
         char secbuf[5];
         snprintf(timebuf, sizeof(timebuf), "%02d:%02d",

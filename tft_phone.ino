@@ -139,7 +139,9 @@ void setup() {
     wifi_init();
     if (WiFi.isConnected()) {
         delay(15000);
+        //CLOCK CALL *********************
         ntp_sync();
+        
     lv_obj_set_style_text_color(lbl_wifi_icon, lv_color_hex(0x1DB954), 0);
     } else {
     lv_obj_set_style_text_color(lbl_wifi_icon, lv_color_hex(0x555555), 0);
