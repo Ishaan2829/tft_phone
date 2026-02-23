@@ -1,6 +1,7 @@
 #pragma once
 #include <lvgl.h>
-#include "ui_manager.h"
+#include "ui_manager.h" 
+#include "ui_helpers.h"
 
 lv_obj_t *scr_call;
 

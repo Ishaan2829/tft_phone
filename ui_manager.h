@@ -1,4 +1,5 @@
 #pragma once
+#include "theme.h"
 #include <lvgl.h>
 
 // GLOBAL EXTERN OBJECTS ***********************

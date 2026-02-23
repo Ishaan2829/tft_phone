@@ -1,6 +1,7 @@
 #pragma once
 #include <lvgl.h>
-#include "ui_manager.h"
+#include "ui_manager.h" 
+#include "ui_helpers.h"
 #include "ui_statusbar.h"
 
 lv_obj_t *scr_calendar;

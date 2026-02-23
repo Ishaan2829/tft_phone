@@ -1,5 +1,6 @@
 #pragma once
 #include <lvgl.h>
+#include "ui_helpers.h"
 #include "ui_manager.h"
 
 void create_statusbar() {

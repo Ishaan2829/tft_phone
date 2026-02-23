@@ -3,6 +3,8 @@
 #include "ui_manager.h"
 #include "ui_statusbar.h"
 #include "image_data.h"
+
+#include "ui_helpers.h"
 extern TFT_eSPI tft;
 
 lv_obj_t *scr_home;

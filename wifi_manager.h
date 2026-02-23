@@ -2,9 +2,11 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <WebServer.h>
+ #include "ui_helpers.h"
 #include <Preferences.h>
 #include "events.h"
 #include <time.h>
+extern void wifi_save_network(String ssid, String pass);
 
 #define WIFI_AP_NAME     "esp_setup"
 #define WIFI_AP_PASS     "12345678"
@@ -145,6 +147,7 @@ bool wifi_connect() {
     }
 
     wifi_connected = true;
+    wifi_save_network(String(WIFI_SSID), String(WIFI_PASS));
     Serial.println("\nWiFi connected: " + WiFi.localIP().toString());
     events_emit({EVT_WIFI_CONNECTED, WiFi.localIP().toString(), 
                  String(WIFI_SSID), true});

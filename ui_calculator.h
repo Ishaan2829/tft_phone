@@ -2,7 +2,7 @@
 #include <lvgl.h>
 #include "ui_manager.h"
 #include "ui_statusbar.h"
-
+#include "ui_helpers.h"
 lv_obj_t *scr_calculator;
 
 // STATE

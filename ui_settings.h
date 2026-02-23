@@ -3,7 +3,7 @@
 #include "ui_manager.h"
 #include "ui_statusbar.h"
 #include <WiFi.h>
-
+#include "ui_helpers.h"
 lv_obj_t *scr_settings;
 
 //TOGGLE STATES*******************

@@ -1,6 +1,8 @@
 #include <SPI.h>
 #include <TFT_eSPI.h>
 #include <XPT2046_Touchscreen.h>
+#include "theme.h"
+#include "ui_manager.h"
 #include <lvgl.h>
 #include "ui_statusbar.h"
 #include "bt_avrcp.h"
@@ -12,8 +14,8 @@
 #include "ui_settings_bt.h"
 #include "ui_settings_wifi.h"
 #include <time.h> 
+#include "ui_helpers.h"
 
-#include "ui_manager.h"
 #include "ui_home.h"
 #include "ui_call.h"
 #include "ui_music.h"
