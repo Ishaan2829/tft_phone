@@ -1,6 +1,8 @@
 #pragma once
+#include "theme.h"
 #include <lvgl.h>
 
+// GLOBAL EXTERN OBJECTS ***********************
 extern lv_obj_t *scr_home;
 extern lv_obj_t *scr_call;
 extern lv_obj_t *scr_music;
@@ -8,18 +10,34 @@ extern lv_obj_t *scr_settings;
 extern lv_obj_t *scr_calculator;
 extern lv_obj_t *scr_calendar;
 extern lv_obj_t *scr_clock;
+extern lv_obj_t *scr_settings_bt;
+extern lv_obj_t *scr_settings_wifi;
 
-// ── Forward declarations of create functions ───────────────────────────────
+
+
+
+/*GLOABAL UPDATE FLAGS
+*********DON'T TOUCH**************/
+lv_obj_t *statusbar;
+lv_obj_t *lbl_time;
+lv_obj_t *lbl_bt_icon;
+lv_obj_t *lbl_track;
+lv_obj_t *lbl_artist;
+lv_obj_t *lbl_bt_status;
+lv_obj_t *lbl_bt_device;
+lv_obj_t *lbl_wifi_icon;
+
 void create_calculator_screen();
 void create_calendar_screen();
 void create_clock_screen();
 
-// ── Lazy load flags ────────────────────────────────────────────────────────
+//LL FLAGS******
 static bool scr_calculator_created = false;
 static bool scr_calendar_created   = false;
 static bool scr_clock_created      = false;
 
-// ── Switch screen with lazy loading ───────────────────────────────────────
+
+//LAZY LOADING************
 void ui_switch_screen(lv_obj_t **target_ptr) {
     // Create screen if first time opening
     if (target_ptr == &scr_calculator && !scr_calculator_created) {

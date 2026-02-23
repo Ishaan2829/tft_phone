@@ -1,10 +1,11 @@
 #pragma once
 #include <lvgl.h>
-#include "ui_manager.h"
+#include "ui_manager.h" 
+#include "ui_helpers.h"
 
 lv_obj_t *scr_call;
 
-// ── Call status label (updated by Bluetooth later) ────────────────────────
+// CALL STATUS ************ADD BLE *************WIP******
 lv_obj_t *lbl_caller;
 lv_obj_t *lbl_call_status;
 
@@ -12,35 +13,35 @@ void create_call_screen() {
     scr_call = lv_obj_create(NULL);
     lv_obj_set_style_bg_color(scr_call, lv_color_hex(0x0a0a0a), 0);
 
-    // ── Caller name/number ─────────────────────────────────────────────────
+    // name
     lbl_caller = lv_label_create(scr_call);
     lv_label_set_text(lbl_caller, "Unknown");
     lv_obj_set_style_text_color(lbl_caller, lv_color_hex(0xFFFFFF), 0);
     lv_obj_set_style_text_font(lbl_caller, &lv_font_montserrat_20, 0);
     lv_obj_align(lbl_caller, LV_ALIGN_TOP_MID, 0, 30);
 
-    // ── Call status ────────────────────────────────────────────────────────
+//status
     lbl_call_status = lv_label_create(scr_call);
     lv_label_set_text(lbl_call_status, "Incoming Call...");
     lv_obj_set_style_text_color(lbl_call_status, lv_color_hex(0xAAAAAA), 0);
     lv_obj_set_style_text_font(lbl_call_status, &lv_font_montserrat_14, 0);
     lv_obj_align(lbl_call_status, LV_ALIGN_TOP_MID, 0, 65);
 
-    // ── Accept Button ──────────────────────────────────────────────────────
+    // A BUTTON
     lv_obj_t *btn_accept = lv_btn_create(scr_call);
     lv_obj_set_size(btn_accept, 120, 55);
     lv_obj_align(btn_accept, LV_ALIGN_BOTTOM_LEFT, 30, -30);
     lv_obj_set_style_bg_color(btn_accept, lv_color_hex(0x1DB954), 0);
     lv_obj_add_event_cb(btn_accept, [](lv_event_t *e) {
         lv_label_set_text(lbl_call_status, "On Call");
-        // bt_accept_call(); // ← will be hooked in Phase 3
+        // CALL A WIP+++++++=
     }, LV_EVENT_CLICKED, NULL);
 
     lv_obj_t *lbl_accept = lv_label_create(btn_accept);
     lv_label_set_text(lbl_accept, LV_SYMBOL_CALL " Accept");
     lv_obj_center(lbl_accept);
 
-    // ── Reject Button ──────────────────────────────────────────────────────
+    // R BUTTON
     lv_obj_t *btn_reject = lv_btn_create(scr_call);
     lv_obj_set_size(btn_reject, 120, 55);
     lv_obj_align(btn_reject, LV_ALIGN_BOTTOM_RIGHT, -30, -30);

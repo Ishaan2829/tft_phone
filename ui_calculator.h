@@ -2,17 +2,17 @@
 #include <lvgl.h>
 #include "ui_manager.h"
 #include "ui_statusbar.h"
-
+#include "ui_helpers.h"
 lv_obj_t *scr_calculator;
 
-// ── Calculator state ───────────────────────────────────────────────────────
+// STATE
 static double  calc_a       = 0;
 static double  calc_b       = 0;
 static char    calc_op      = 0;
 static bool    calc_new_num = true;
 static lv_obj_t *lbl_display;
 
-// ── Display update ─────────────────────────────────────────────────────────
+//DISP UPDATE AFTER PRESS**************
 void calc_update_display(double val) {
     char buf[20];
     if (val == (int64_t)val)
@@ -22,7 +22,7 @@ void calc_update_display(double val) {
     lv_label_set_text(lbl_display, buf);
 }
 
-// ── Button press handler ───────────────────────────────────────────────────
+// PRESS HANDLER************************
 void calc_handle(const char *txt) {
     // Clear
     if (strcmp(txt, "C") == 0) {
@@ -33,7 +33,7 @@ void calc_handle(const char *txt) {
         return;
     }
 
-    // Equals
+  
     if (strcmp(txt, "=") == 0) {
         double cur = atof(lv_label_get_text(lbl_display));
         switch (calc_op) {
@@ -48,7 +48,7 @@ void calc_handle(const char *txt) {
         return;
     }
 
-    // Operator
+    
     if (strcmp(txt,"+") == 0 || strcmp(txt,"-") == 0 ||
         strcmp(txt,"*") == 0 || strcmp(txt,"/") == 0) {
         calc_a   = atof(lv_label_get_text(lbl_display));
@@ -57,7 +57,6 @@ void calc_handle(const char *txt) {
         return;
     }
 
-    // Number or dot
     const char *cur = lv_label_get_text(lbl_display);
     char buf[20];
     if (calc_new_num) {
@@ -74,11 +73,8 @@ void create_calculator_screen() {
     scr_calculator = lv_obj_create(NULL);
     lv_obj_set_style_bg_color(scr_calculator, lv_color_hex(0x0d0d0d), 0);
     lv_obj_clear_flag(scr_calculator, LV_OBJ_FLAG_SCROLLABLE);
+;
 
-    // ── Status bar ─────────────────────────────────────────────────────────
-    create_statusbar(scr_calculator);
-
-    // ── Display ────────────────────────────────────────────────────────────
     lv_obj_t *display = lv_obj_create(scr_calculator);
     lv_obj_set_size(display, 300, 40);
     lv_obj_align(display, LV_ALIGN_TOP_MID, 0, 25);
@@ -92,29 +88,29 @@ void create_calculator_screen() {
     lv_obj_set_style_text_font(lbl_display, &lv_font_montserrat_20, 0);
     lv_obj_align(lbl_display, LV_ALIGN_RIGHT_MID, -8, 0);
 
-    // ── Button grid ────────────────────────────────────────────────────────
+    // GRID******************
     const char *btns[4][4] = {
-        { "C", "/", "*", "-" },
-        { "7", "8", "9", "+" },
-        { "4", "5", "6", "=" },
-        { "1", "2", "3", "0" },
+    { "C", "/", "*", "-" },
+    { "7", "8", "9", "+" },
+    { "4", "5", "6", "=" },
+    { "1", "2", "3", "0" },
     };
-
+    
+    for (uint8_t r = 0; r < 4; r++) {
+        for (uint8_t c = 0; c < 4; c++) {
+            const char *label = btns[r][c];
+            lv_obj_t *btn = lv_btn_create(scr_calculator);
+            lv_obj_set_size(btn, 75, 45);  // wider and taller
+            lv_obj_set_pos(btn, 4 + c * 79, 65 + r * 48);
     lv_color_t op_color  = lv_color_hex(0xF59E0B);
     lv_color_t num_color = lv_color_hex(0x2a2a2a);
     lv_color_t clr_color = lv_color_hex(0xE53935);
 
-    for (uint8_t r = 0; r < 4; r++) {
-        for (uint8_t c = 0; c < 4; c++) {
-            const char *label = btns[r][c];
+    
 
-            lv_obj_t *btn = lv_btn_create(scr_calculator);
-            lv_obj_set_size(btn, 68, 38);
-            lv_obj_set_pos(btn, 8 + c * 76, 72 + r * 44);
-            lv_obj_set_style_radius(btn, 8, 0);
-            lv_obj_set_style_border_width(btn, 0, 0);
+            
 
-            // Color by type
+            // COLOUR
             if (strcmp(label, "C") == 0)
                 lv_obj_set_style_bg_color(btn, clr_color, 0);
             else if (strcmp(label,"+") == 0 || strcmp(label,"-") == 0 ||
@@ -129,17 +125,16 @@ void create_calculator_screen() {
             lv_obj_set_style_text_font(lbl, &lv_font_montserrat_14, 0);
             lv_obj_center(lbl);
 
-            // Pass button label as user data
+           
             lv_obj_add_event_cb(btn, [](lv_event_t *e) {
                 calc_handle((const char *)lv_event_get_user_data(e));
             }, LV_EVENT_CLICKED, (void *)label);
         }
     }
 
-    // ── Back button ────────────────────────────────────────────────────────
     lv_obj_t *btn_back = lv_btn_create(scr_calculator);
     lv_obj_set_size(btn_back, 80, 30);
-    lv_obj_align(btn_back, LV_ALIGN_BOTTOM_MID, 0, -5);
+    lv_obj_align(btn_back, LV_ALIGN_TOP_LEFT, 4, 22);
     lv_obj_set_style_bg_color(btn_back, lv_color_hex(0x333333), 0);
     lv_obj_add_event_cb(btn_back, [](lv_event_t *e) {
         ui_switch_screen(&scr_home);

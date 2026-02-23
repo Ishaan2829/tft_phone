@@ -3,6 +3,8 @@
 #include "ui_manager.h"
 #include "ui_statusbar.h"
 #include "image_data.h"
+
+#include "ui_helpers.h"
 extern TFT_eSPI tft;
 
 lv_obj_t *scr_home;
@@ -18,19 +20,16 @@ void create_home_screen() {
     lv_obj_set_style_bg_opa(scr_home, LV_OPA_TRANSP, 0);
     lv_obj_set_style_bg_opa(scr_home, LV_OPA_TRANSP, 0);
 
-// Make LVGL display layer transparent so wallpaper shows through
     lv_disp_t *disp = lv_disp_get_default();
     lv_obj_set_style_bg_color(scr_home, lv_color_hex(0x0a0a1a), 0);
     lv_obj_set_style_bg_grad_color(scr_home, lv_color_hex(0x1a0a2e), 0);
     lv_obj_set_style_bg_grad_dir(scr_home, LV_GRAD_DIR_VER, 0);
     lv_obj_set_style_bg_opa(scr_home, LV_OPA_COVER, 0);
 
-    // ── Status bar ─────────────────────────────────────────────────────────
-    create_statusbar(scr_home);
 
    
 
-    // ── App definitions ────────────────────────────────────────────────────
+    // APP DEFINATIONS ************************
     app_item_t apps[] = {
         { LV_SYMBOL_CALL,     &scr_call,       lv_color_hex(0x1DB954) },
         { LV_SYMBOL_AUDIO,    &scr_music,      lv_color_hex(0x1A78C2) },
@@ -40,7 +39,7 @@ void create_home_screen() {
         { LV_SYMBOL_BELL,     &scr_clock,      lv_color_hex(0x06B6D4) },
     };
 
-    // ── Icon grid (2 rows x 3 cols, centered) ──────────────────────────────
+    // ── ICON GRID (2 x 3, centered)*************
     uint8_t cols    = 3;
     uint8_t icon_sz = 72;
     uint8_t gap     = 18;
@@ -55,7 +54,7 @@ void create_home_screen() {
         uint8_t x = start_x + col * (icon_sz + gap);
         uint8_t y = start_y + row * (icon_sz + gap);
 
-        // ── Icon container ─────────────────────────────────────────────────
+        // ICON CONTAINER************************
         lv_obj_t *btn = lv_obj_create(scr_home);
         lv_obj_set_size(btn, icon_sz, icon_sz);
         lv_obj_set_pos(btn, x, y);
@@ -71,14 +70,14 @@ void create_home_screen() {
         lv_obj_set_style_pad_all(btn, 0, 0);
         lv_obj_clear_flag(btn, LV_OBJ_FLAG_SCROLLABLE);
 
-        // ── Icon symbol ────────────────────────────────────────────────────
+        // ICON SYMBOL**************************
         lv_obj_t *icon = lv_label_create(btn);
         lv_label_set_text(icon, apps[i].icon);
         lv_obj_set_style_text_color(icon, apps[i].color, 0);
         lv_obj_set_style_text_font(icon, &lv_font_montserrat_20, 0);
         lv_obj_center(icon);
 
-        // ── Touch handler ──────────────────────────────────────────────────
+        // TOUCH HANDLER*************
         lv_obj_set_user_data(btn, apps[i].target);
         lv_obj_add_event_cb(btn, [](lv_event_t *e) {
             lv_obj_t **t = (lv_obj_t **)lv_obj_get_user_data(lv_event_get_target(e));
